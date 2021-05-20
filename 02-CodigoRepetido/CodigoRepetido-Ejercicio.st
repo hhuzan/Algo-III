@@ -46,7 +46,7 @@ test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 	
 ! !
 
-!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/19/2021 22:16:25'!
+!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/20/2021 15:58:13'!
 test03CanNotAddACustomerWithEmptyName 
 
 	|blockToFail blockToRunWhenFail|
@@ -59,9 +59,9 @@ test03CanNotAddACustomerWithEmptyName
 		self assert: customerBook isEmpty
 		].
 
-	self failBlock: blockToFail withError: Error thenDo: blockToRunWhenFail ! !
+	self failBlock: blockToFail ifError: Error thenShouldDo: blockToRunWhenFail ! !
 
-!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/19/2021 22:36:44'!
+!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/20/2021 15:58:13'!
 test04CanNotRemoveAnInvalidCustomer
 	
 	| johnLennon blockToFail blockToRunWhenFail|
@@ -75,7 +75,7 @@ test04CanNotRemoveAnInvalidCustomer
 	blockToRunWhenFail := [ :anError |
 			self assertTherIsOnlyOneCustomerNamed: johnLennon ].
 
-	self failBlock: blockToFail withError: Error thenDo: blockToRunWhenFail 
+	self failBlock: blockToFail ifError: Error thenShouldDo: blockToRunWhenFail 
 ! !
 
 !CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/19/2021 22:37:10'!
@@ -113,7 +113,7 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/19/2021 22:37:53'!
+!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/20/2021 15:58:13'!
 test07CanNotSuspendAnInvalidCustomer
 	
 	| johnLennon blockToFail blockToRunWhenFail |
@@ -125,9 +125,9 @@ test07CanNotSuspendAnInvalidCustomer
 	
 	blockToRunWhenFail := [ :anError | 			self assertTherIsOnlyOneCustomerNamed: johnLennon ].
 
-	self failBlock: blockToFail withError: CantSuspend thenDo: blockToRunWhenFail ! !
+	self failBlock: blockToFail ifError: CantSuspend thenShouldDo: blockToRunWhenFail ! !
 
-!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/19/2021 22:38:07'!
+!CustomerBookTest methodsFor: 'tests' stamp: 'HJH 5/20/2021 15:58:13'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
 	
 	| johnLennon blockToFail blockToRunWhenFail |
@@ -140,7 +140,7 @@ test08CanNotSuspendAnAlreadySuspendedCustomer
 	
 	blockToRunWhenFail := [ :anError | 			self assertTherIsOnlyOneCustomerNamed: johnLennon ].
 
-	self failBlock: blockToFail withError: CantSuspend thenDo: blockToRunWhenFail ! !
+	self failBlock: blockToFail ifError: CantSuspend thenShouldDo: blockToRunWhenFail ! !
 
 
 !CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'HJH 5/19/2021 21:24:08'!
@@ -157,8 +157,8 @@ assertTherIsOnlyOneCustomerNamed: aCustomer
 	self assert: (customerBook includesCustomerNamed: aCustomer)
 ! !
 
-!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'HJH 5/19/2021 22:02:46'!
-failBlock: aBlock withError: anError thenDo: blockWhenFail  
+!CustomerBookTest methodsFor: 'as yet unclassified' stamp: 'HJH 5/20/2021 15:58:13'!
+failBlock: aBlock ifError: anError thenShouldDo: blockWhenFail  
 
 	[ aBlock value.
 	self fail ]
