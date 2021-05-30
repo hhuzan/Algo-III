@@ -406,6 +406,12 @@ Numero subclass: #Entero
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
+!Entero methodsFor: 'private' stamp: 'HJH 5/29/2021 03:03:04'!
+fibonacci
+
+	self subclassResponsibility! !
+
+
 !Entero methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 02:36:15'!
 * aMultiplier
 
@@ -425,11 +431,6 @@ Numero subclass: #Entero
 / aDivisor
 
 	^aDivisor divideToEntero: self! !
-
-!Entero methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 03:03:04'!
-fibonacci
-
-	self subclassResponsibility! !
 
 
 !Entero methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 21:01'!
@@ -495,20 +496,20 @@ beAddedToEntero: anEnteroAugend
 
 	^self class with: value + anEnteroAugend integerValue! !
 
-!Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 02:39:59'!
+!Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/30/2021 20:19:29'!
 beAddedToFraccion: aFraccionAugend
 
-	^self * aFraccionAugend denominator + aFraccionAugend numerator / aFraccionAugend denominator! !
+	^aFraccionAugend beAddedToEntero: self! !
 
 !Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 02:40:33'!
 beMultipliedWithEntero: anEnteroMultiplican
 
 	^self class with: value * anEnteroMultiplican integerValue! !
 
-!Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 02:40:54'!
+!Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/30/2021 20:23:19'!
 beMultipliedWithFraccion: aFraccionMultiplicand
 
-	^self * aFraccionMultiplicand numerator / aFraccionMultiplicand denominator! !
+	^aFraccionMultiplicand beMultipliedWithEntero: self! !
 
 !Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:35:40'!
 beSubstratedFromEntero: anEnteroSubstrahend
@@ -562,17 +563,19 @@ Entero subclass: #Cero
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!Cero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 03:09:06'!
-fibonacci
-
-	^Entero with: 1! !
-
-!Cero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 03:24:58'!
+!Cero methodsFor: 'initialization' stamp: 'HJH 5/29/2021 03:24:58'!
 initialize
 
 	value := 0! !
 
-!Cero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:07:36'!
+
+!Cero methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 03:09:06'!
+fibonacci
+
+	^Entero with: 1! !
+
+
+!Cero methodsFor: 'testing' stamp: 'HJH 5/29/2021 04:07:36'!
 isZero
 
 	^true! !
@@ -585,7 +588,7 @@ Entero subclass: #NaturalNoUno
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!NaturalNoUno methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:26:20'!
+!NaturalNoUno methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 04:26:20'!
 fibonacci
 
 	| one two |
@@ -603,12 +606,13 @@ Entero subclass: #Negativo
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!Negativo methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 03:08:29'!
+!Negativo methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 03:08:29'!
 fibonacci
 
 	self error: Entero negativeFibonacciErrorDescription! !
 
-!Negativo methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:28:36'!
+
+!Negativo methodsFor: 'testing' stamp: 'HJH 5/29/2021 04:28:36'!
 isNegative
 
 	^true! !
@@ -621,20 +625,22 @@ Entero subclass: #Uno
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:24:07'!
-fibonacci
+!Uno methodsFor: 'testing' stamp: 'HJH 5/29/2021 04:03:06'!
+isOne
 
-	^self class with: 1! !
+	^true! !
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 03:25:27'!
+
+!Uno methodsFor: 'initialization' stamp: 'HJH 5/29/2021 03:25:27'!
 initialize
 
 	value := 1! !
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:03:06'!
-isOne
 
-	^true! !
+!Uno methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 04:24:07'!
+fibonacci
+
+	^self class with: 1! !
 
 
 !classDefinition: #Fraccion category: 'Numeros-Parte2-Ejercicio'!
