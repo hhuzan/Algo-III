@@ -356,8 +356,8 @@ beMultipliedWithFraccion: aFraccionMultiplicand
 
 	self subclassResponsibility! !
 
-!Numero methodsFor: 'private' stamp: 'HJH 5/29/2021 04:35:40'!
-beSubstratedFromEntero: anEnteroSubstrahend
+!Numero methodsFor: 'private' stamp: 'HJH 5/31/2021 18:50:33'!
+beSubstractedFromEntero: anEnteroSubstrahend
 
 	self subclassResponsibility
 ! !
@@ -422,10 +422,10 @@ fibonacci
 
 	^anAdder beAddedToEntero: self.! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 04:35:40'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'HJH 5/31/2021 18:50:33'!
 - aSubtrahend
 
-	^aSubtrahend beSubstratedFromEntero: self! !
+	^aSubtrahend beSubstractedFromEntero: self! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'HJH 5/29/2021 02:38:15'!
 / aDivisor
@@ -511,8 +511,8 @@ beMultipliedWithFraccion: aFraccionMultiplicand
 
 	^aFraccionMultiplicand beMultipliedWithEntero: self! !
 
-!Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:35:40'!
-beSubstratedFromEntero: anEnteroSubstrahend
+!Entero methodsFor: 'as yet unclassified' stamp: 'HJH 5/31/2021 18:50:33'!
+beSubstractedFromEntero: anEnteroSubstrahend
 
 	^self class with: anEnteroSubstrahend integerValue - value! !
 
@@ -796,8 +796,8 @@ beMultipliedWithFraccion: aFraccionMultiplicand
 
 	^aFraccionMultiplicand numerator * numerator / (denominator * aFraccionMultiplicand denominator)! !
 
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:35:40'!
-beSubstratedFromEntero: anEnteroSubstrahend
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'HJH 5/31/2021 18:50:33'!
+beSubstractedFromEntero: anEnteroSubstrahend
 
 	^anEnteroSubstrahend * denominator - numerator / denominator! !
 
