@@ -266,7 +266,7 @@ test42SignIsCorrectlyAssignedToFractionWithNegativeDivisor
 	self assert: oneHalf negated equals: (one / negativeTwo)! !
 
 
-!NumeroTest methodsFor: 'setup' stamp: 'NR 9/23/2018 23:46:28'!
+!NumeroTest methodsFor: 'setup' stamp: 'HJH 5/31/2021 15:59:45'!
 setUp
 
 	zero := Entero with: 0.
@@ -541,21 +541,17 @@ Entero class
 negativeFibonacciErrorDescription
 	^ ' Fibonacci no está definido aquí para Enteros Negativos'! !
 
-!Entero class methodsFor: 'instance creation' stamp: 'HJH 5/31/2021 13:59:27'!
+!Entero class methodsFor: 'instance creation' stamp: 'HJH 5/31/2021 16:00:20'!
 with: aValue 
 	
+	| classToInstantiate |
+
 	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
 	aValue isInteger ifFalse: [  self error: 'aValue debe ser anInteger' ].
 
 
-"Estos IFs son para no modificar el setUp de los tests!!!!!!!! "
-
-	aValue < 0 ifTrue: [^Negativo new initializeWith: aValue].
-	aValue = 0 ifTrue: [^Cero new].
-	aValue = 1 ifTrue: [^Uno new].
-	^NaturalNoUno new initializeWith: aValue
-
-"No encontramos como eliminar estos if con metaprog. (según pista collection detect:)"! !
+	classToInstantiate := Entero allSubclasses detect: [:aClass | aClass isAValidValue: aValue].
+	^classToInstantiate new initializeWith: aValue! !
 
 
 !classDefinition: #Cero category: 'Numeros-Parte2-Ejercicio'!
@@ -582,6 +578,17 @@ isZero
 
 	^true! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Cero class' category: 'Numeros-Parte2-Ejercicio'!
+Cero class
+	instanceVariableNames: ''!
+
+!Cero class methodsFor: 'as yet unclassified' stamp: 'HJH 5/31/2021 15:30:55'!
+isAValidValue: aValue
+
+	^aValue = 0! !
+
 
 !classDefinition: #NaturalNoUno category: 'Numeros-Parte2-Ejercicio'!
 Entero subclass: #NaturalNoUno
@@ -599,6 +606,17 @@ fibonacci
 	two := Entero with: 2.
 	
 	^ (self - one) fibonacci + (self - two) fibonacci! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'NaturalNoUno class' category: 'Numeros-Parte2-Ejercicio'!
+NaturalNoUno class
+	instanceVariableNames: ''!
+
+!NaturalNoUno class methodsFor: 'as yet unclassified' stamp: 'HJH 5/31/2021 15:46:10'!
+isAValidValue: aValue
+
+	^aValue >= 2! !
 
 
 !classDefinition: #Negativo category: 'Numeros-Parte2-Ejercicio'!
@@ -618,6 +636,17 @@ fibonacci
 isNegative
 
 	^true! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Negativo class' category: 'Numeros-Parte2-Ejercicio'!
+Negativo class
+	instanceVariableNames: ''!
+
+!Negativo class methodsFor: 'as yet unclassified' stamp: 'HJH 5/31/2021 15:31:47'!
+isAValidValue: aValue
+
+	^aValue < 0! !
 
 
 !classDefinition: #Uno category: 'Numeros-Parte2-Ejercicio'!
@@ -643,6 +672,17 @@ initialize
 fibonacci
 
 	^self class with: 1! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Uno class' category: 'Numeros-Parte2-Ejercicio'!
+Uno class
+	instanceVariableNames: ''!
+
+!Uno class methodsFor: 'as yet unclassified' stamp: 'HJH 5/31/2021 15:31:14'!
+isAValidValue: aValue
+
+	^aValue = 1! !
 
 
 !classDefinition: #Fraccion category: 'Numeros-Parte2-Ejercicio'!
