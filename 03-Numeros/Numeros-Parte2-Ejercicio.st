@@ -684,10 +684,10 @@ hash
 	^(numerator hash / denominator hash) hash! !
 
 
-!Fraccion methodsFor: 'accessing' stamp: 'HernanWilkinson 5/7/2016 21:56'!
+!Fraccion methodsFor: 'accessing' stamp: 'HJH 5/30/2021 21:55:21'!
 denominator
 
-	^ denominator! !
+	^denominator! !
 
 !Fraccion methodsFor: 'accessing' stamp: 'HernanWilkinson 5/7/2016 21:56'!
 numerator
@@ -751,10 +751,10 @@ beMultipliedWithEntero: anEnteroMultiplicand
 
 	^anEnteroMultiplicand * numerator / denominator! !
 
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 02:45:03'!
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'HJH 5/30/2021 21:54:40'!
 beMultipliedWithFraccion: aFraccionMultiplicand
 
-	^(aFraccionMultiplicand numerator * numerator) / (denominator * aFraccionMultiplicand denominator)! !
+	^aFraccionMultiplicand numerator * numerator / (denominator * aFraccionMultiplicand denominator)! !
 
 !Fraccion methodsFor: 'as yet unclassified' stamp: 'HJH 5/29/2021 04:35:40'!
 beSubstratedFromEntero: anEnteroSubstrahend
