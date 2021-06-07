@@ -152,24 +152,26 @@ Object subclass: #OOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:36:27'!
+!OOStack methodsFor: 'initialization' stamp: 'CC 6/6/2021 23:36:27'!
 initialize
 	
 	elements  := EmptyStackElement new.
 ! !
+
 
 !OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 22:23:39'!
 isEmpty
 
 	^elements isEmpty ! !
 
-!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:54:42'!
+!OOStack methodsFor: 'as yet unclassified' stamp: 'HJH 6/7/2021 00:10:44'!
 pop
 
 	| topElement |
 	
 	topElement := elements top.
 	elements := elements elements.
+
 	^topElement! !
 
 !OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:50:18'!
@@ -208,31 +210,31 @@ Object subclass: #SentenceFinderByPrefix
 	category: 'Stack-Exercise'!
 
 
-!classDefinition: #StackElements category: 'Stack-Exercise'!
-Object subclass: #StackElements
+!classDefinition: #StackElement category: 'Stack-Exercise'!
+Object subclass: #StackElement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!StackElements methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:30:08'!
+!StackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:30:08'!
 isEmpty
 
 	self subclassResponsibility ! !
 
-!StackElements methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:30:22'!
+!StackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:30:22'!
 size
 
 	self subclassResponsibility ! !
 
-!StackElements methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:51:45'!
+!StackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:51:45'!
 top
 
 	self subclassResponsibility ! !
 
 
 !classDefinition: #EmptyStackElement category: 'Stack-Exercise'!
-StackElements subclass: #EmptyStackElement
+StackElement subclass: #EmptyStackElement
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -255,32 +257,32 @@ top
 
 
 !classDefinition: #FilledStackElement category: 'Stack-Exercise'!
-StackElements subclass: #FilledStackElement
+StackElement subclass: #FilledStackElement
 	instanceVariableNames: 'elements topElement'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
-
-!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:38:58'!
-add: actualElements and: aNewElement
-
-	elements := actualElements.
-	topElement := aNewElement.! !
 
 !FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:32:13'!
 elements
 	
 	^elements! !
 
+!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'HJH 6/7/2021 00:13:57'!
+initializeWithElements: innerElements andTop: aTopElement
+
+	elements := innerElements.
+	topElement := aTopElement.! !
+
 !FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:05:05'!
 isEmpty
 
 	^false! !
 
-!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:32:13'!
+!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'HJH 6/7/2021 00:14:19'!
 size
 
-	^1+elements size.! !
+	^1 + elements size.! !
 
 !FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:51:45'!
 top
@@ -293,12 +295,12 @@ top
 FilledStackElement class
 	instanceVariableNames: ''!
 
-!FilledStackElement class methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:45:38'!
+!FilledStackElement class methodsFor: 'as yet unclassified' stamp: 'HJH 6/7/2021 00:09:06'!
 withElements: actualElements andTop: aNewElement
 	
 	| newStackElements |
 	
 	newStackElements := FilledStackElement new.
-	newStackElements add: actualElements and: aNewElement.
+	newStackElements initializeWithElements: actualElements andTop: aNewElement.
 	
 	^newStackElements ! !
