@@ -1,4 +1,4 @@
-!classDefinition: #OOStackTest category: #'Stack-Exercise'!
+!classDefinition: #OOStackTest category: 'Stack-Exercise'!
 TestCase subclass: #OOStackTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -137,7 +137,7 @@ test10CanNotTopWhenThereAreNoObjectsInTheStack
 ! !
 
 
-!classDefinition: #SentenceFinderByPrefixTest category: #'Stack-Exercise'!
+!classDefinition: #SentenceFinderByPrefixTest category: 'Stack-Exercise'!
 TestCase subclass: #SentenceFinderByPrefixTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -145,16 +145,52 @@ TestCase subclass: #SentenceFinderByPrefixTest
 	category: 'Stack-Exercise'!
 
 
-!classDefinition: #OOStack category: #'Stack-Exercise'!
+!classDefinition: #OOStack category: 'Stack-Exercise'!
 Object subclass: #OOStack
-	instanceVariableNames: ''
+	instanceVariableNames: 'elements'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
+!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:36:27'!
+initialize
+	
+	elements  := EmptyStackElement new.
+! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 22:23:39'!
+isEmpty
+
+	^elements isEmpty ! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:54:42'!
+pop
+
+	| topElement |
+	
+	topElement := elements top.
+	elements := elements elements.
+	^topElement! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:50:18'!
+push: anElement
+	
+	elements := FilledStackElement withElements: elements andTop: anElement
+! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 22:33:38'!
+size
+
+	^elements size.! !
+
+!OOStack methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:51:45'!
+top
+
+	^elements top.! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'OOStack class' category: #'Stack-Exercise'!
+!classDefinition: 'OOStack class' category: 'Stack-Exercise'!
 OOStack class
 	instanceVariableNames: ''!
 
@@ -164,9 +200,105 @@ stackEmptyErrorDescription
 	^ 'Stack is empty'! !
 
 
-!classDefinition: #SentenceFinderByPrefix category: #'Stack-Exercise'!
+!classDefinition: #SentenceFinderByPrefix category: 'Stack-Exercise'!
 Object subclass: #SentenceFinderByPrefix
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
+
+
+!classDefinition: #StackElements category: 'Stack-Exercise'!
+Object subclass: #StackElements
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!StackElements methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:30:08'!
+isEmpty
+
+	self subclassResponsibility ! !
+
+!StackElements methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:30:22'!
+size
+
+	self subclassResponsibility ! !
+
+!StackElements methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:51:45'!
+top
+
+	self subclassResponsibility ! !
+
+
+!classDefinition: #EmptyStackElement category: 'Stack-Exercise'!
+StackElements subclass: #EmptyStackElement
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!EmptyStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 22:54:37'!
+isEmpty
+
+	^true! !
+
+!EmptyStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:16:20'!
+size
+	
+	^0! !
+
+!EmptyStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:51:45'!
+top
+
+	^self error: OOStack stackEmptyErrorDescription! !
+
+
+!classDefinition: #FilledStackElement category: 'Stack-Exercise'!
+StackElements subclass: #FilledStackElement
+	instanceVariableNames: 'elements topElement'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:38:58'!
+add: actualElements and: aNewElement
+
+	elements := actualElements.
+	topElement := aNewElement.! !
+
+!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:32:13'!
+elements
+	
+	^elements! !
+
+!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:05:05'!
+isEmpty
+
+	^false! !
+
+!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:32:13'!
+size
+
+	^1+elements size.! !
+
+!FilledStackElement methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:51:45'!
+top
+	
+	^topElement! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'FilledStackElement class' category: 'Stack-Exercise'!
+FilledStackElement class
+	instanceVariableNames: ''!
+
+!FilledStackElement class methodsFor: 'as yet unclassified' stamp: 'CC 6/6/2021 23:45:38'!
+withElements: actualElements andTop: aNewElement
+	
+	| newStackElements |
+	
+	newStackElements := FilledStackElement new.
+	newStackElements add: actualElements and: aNewElement.
+	
+	^newStackElements ! !
