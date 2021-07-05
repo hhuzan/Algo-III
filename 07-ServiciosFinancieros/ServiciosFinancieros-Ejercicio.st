@@ -89,6 +89,95 @@ test07AccountKnowsItsTransactions
 ! !
 
 
+!classDefinition: #TransferTest category: 'ServiciosFinancieros-Ejercicio'!
+TestCase subclass: #TransferTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:15:51'!
+test01aTransferDecreaseSenderAccountBalanceAndIncreaseReceiverAccountBalance
+
+	| receiverAccount senderAccount |
+	senderAccount := ReceptiveAccount new.
+	receiverAccount := ReceptiveAccount new.
+	Deposit register: 100 * peso on: senderAccount.
+	Transfer transfer: 20 * peso from: senderAccount to: receiverAccount.
+		
+	self assert: (80 * peso = senderAccount balance).
+	self assert: (20 * peso = receiverAccount balance).
+! !
+
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 20:34:36'!
+test02ATransferKnowHisValue
+
+	| receiverAccount senderAccount transfer |
+	
+	senderAccount := ReceptiveAccount new.
+	receiverAccount := ReceptiveAccount new.
+	Deposit register: 100 * peso on: senderAccount.
+	transfer := Transfer transfer: 20 * peso from: senderAccount to: receiverAccount.
+	
+	self assert: (20 * peso = transfer value).
+! !
+
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:17:36'!
+test03aTransferWithdrawLegKnowsHisTransferDepositLeg
+
+	| receiverAccount senderAccount aTransfer aDepositLeg aWithdrawLeg |
+	
+	senderAccount := ReceptiveAccount new.
+	receiverAccount := ReceptiveAccount new.
+	Deposit register: 100 * peso on: senderAccount.
+	aTransfer := Transfer transfer: 20 * peso from: senderAccount to: receiverAccount.
+	
+	aWithdrawLeg := aTransfer withdrawLeg.
+	aDepositLeg := aTransfer depositLeg.
+	
+	self assert: (aWithdrawLeg depositLeg = aDepositLeg ).
+	
+
+! !
+
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:18:23'!
+test04aTransferDepositLegKnowsHisTransferWithdrawLeg
+
+	| receiverAccount senderAccount aTransfer aDepositLeg aWithdrawLeg |
+	
+	senderAccount := ReceptiveAccount new.
+	receiverAccount := ReceptiveAccount new.
+	Deposit register: 100 * peso on: senderAccount.
+	aTransfer := Transfer transfer: 20 * peso from: senderAccount to: receiverAccount.
+	
+	aWithdrawLeg := aTransfer withdrawLeg.
+	aDepositLeg := aTransfer depositLeg.
+	
+	self assert: (aDepositLeg withdrawLeg = aWithdrawLeg ).
+	
+
+! !
+
+!TransferTest methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:18:59'!
+test05ATransferAmountMustBePositive
+
+	| receiverAccount senderAccount |
+	
+	senderAccount := ReceptiveAccount new.
+	receiverAccount := ReceptiveAccount new.
+	Deposit register: 100 * peso on: senderAccount.
+	Deposit register: 50 * peso on: receiverAccount.
+	
+	self 
+		should: [ Transfer transfer: 0 * peso from: senderAccount to: receiverAccount]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError | 
+			self assert: anError messageText equals: Transfer invalidTransferAmountErrorText.
+			self assert: 100 * peso = senderAccount balance.
+			self assert: 50 * peso = receiverAccount balance.
+		 ]! !
+
+
 !classDefinition: #AccountTransaction category: 'ServiciosFinancieros-Ejercicio'!
 Object subclass: #AccountTransaction
 	instanceVariableNames: ''
@@ -98,6 +187,12 @@ Object subclass: #AccountTransaction
 
 !AccountTransaction methodsFor: 'value' stamp: 'HernanWilkinson 9/12/2011 12:25'!
 value 
+
+	self subclassResponsibility ! !
+
+
+!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 19:57:04'!
+effectOnBalance
 
 	self subclassResponsibility ! !
 
@@ -136,6 +231,12 @@ value
 
 	^ value! !
 
+
+!Deposit methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 19:57:04'!
+effectOnBalance
+	
+	^value! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Deposit class' category: 'ServiciosFinancieros-Ejercicio'!
@@ -146,6 +247,78 @@ Deposit class
 for: aValue
 
 	^ self new initializeFor: aValue ! !
+
+
+!classDefinition: #TransferLeg category: 'ServiciosFinancieros-Ejercicio'!
+AccountTransaction subclass: #TransferLeg
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!TransferLeg methodsFor: 'initialization' stamp: 'CC 7/4/2021 23:11:41'!
+initializeFor: aTransfer
+
+	transfer := aTransfer ! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TransferLeg class' category: 'ServiciosFinancieros-Ejercicio'!
+TransferLeg class
+	instanceVariableNames: ''!
+
+!TransferLeg class methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:13:07'!
+effectOnBalance
+
+	self subclassResponsibility ! !
+
+!TransferLeg class methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:12:22'!
+registerOn: account for: aTransfer
+
+	| transaction |
+	
+	transaction := self new initializeFor: aTransfer.
+	account register: transaction.
+		
+	^ transaction! !
+
+
+!classDefinition: #TransferDepositLeg category: 'ServiciosFinancieros-Ejercicio'!
+TransferLeg subclass: #TransferDepositLeg
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!TransferDepositLeg methodsFor: 'initialization' stamp: 'CC 7/4/2021 22:19:44'!
+effectOnBalance
+	
+	^transfer value! !
+
+
+!TransferDepositLeg methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 22:04:27'!
+withdrawLeg
+
+	^transfer withdrawLeg! !
+
+
+!classDefinition: #TransferWithdrawLeg category: 'ServiciosFinancieros-Ejercicio'!
+TransferLeg subclass: #TransferWithdrawLeg
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!TransferWithdrawLeg methodsFor: 'initialization' stamp: 'CC 7/4/2021 22:19:55'!
+effectOnBalance
+	
+	^transfer value negated! !
+
+
+!TransferWithdrawLeg methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 22:04:45'!
+depositLeg
+
+	^transfer depositLeg! !
 
 
 !classDefinition: #Withdraw category: 'ServiciosFinancieros-Ejercicio'!
@@ -165,6 +338,12 @@ initializeFor: aValue
 value
 
 	^ value! !
+
+
+!Withdraw methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 19:57:04'!
+effectOnBalance
+	
+	^value negated ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -191,10 +370,10 @@ initialize
 	transactions := OrderedCollection new.! !
 
 
-!ReceptiveAccount methodsFor: 'main protocol' stamp: 'HAW 5/23/2019 15:19:32'!
+!ReceptiveAccount methodsFor: 'main protocol' stamp: 'CC 7/4/2021 19:57:04'!
 balance
 
-	^transactions sum: [ :aTransaction | aTransaction value ] ifEmpty: [ 0 ]! !
+	^transactions sum: [ :aTransaction | aTransaction effectOnBalance ] ifEmpty: [ 0 ]! !
 
 !ReceptiveAccount methodsFor: 'main protocol' stamp: 'NR 10/17/2019 03:28:43'!
 hasRegistered: aTransaction
@@ -212,3 +391,59 @@ register: aTransaction
 transactions 
 
 	^ transactions copy! !
+
+
+!classDefinition: #Transfer category: 'ServiciosFinancieros-Ejercicio'!
+Object subclass: #Transfer
+	instanceVariableNames: 'value withdrawLeg depositLeg'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!Transfer methodsFor: 'initialization' stamp: 'CC 7/4/2021 22:44:05'!
+initializeFor: anAmount from: sourceAccount to: destinationAccount 
+
+	
+	withdrawLeg := TransferWithdrawLeg registerOn: sourceAccount for: self.
+	depositLeg := TransferDepositLeg registerOn: destinationAccount for: self.
+
+	value := anAmount.! !
+
+
+!Transfer methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 20:54:18'!
+depositLeg
+
+	^depositLeg! !
+
+!Transfer methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 20:33:57'!
+value
+
+	^value! !
+
+!Transfer methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 20:53:42'!
+withdrawLeg
+	
+	^withdrawLeg! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Transfer class' category: 'ServiciosFinancieros-Ejercicio'!
+Transfer class
+	instanceVariableNames: ''!
+
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:19:49'!
+assertValidAmount: anAmount.
+
+	anAmount > (0 * peso) ifFalse: [^self error: self invalidTransferAmountErrorText ]! !
+
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 22:42:12'!
+invalidTransferAmountErrorText
+
+	^'Invalid transfer amount'! !
+
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'CC 7/4/2021 23:08:10'!
+transfer: anAmount from: sourceAccount to: destinationAccount
+
+	self assertValidAmount: anAmount.
+	
+	^Transfer new initializeFor: anAmount from: sourceAccount to: destinationAccount.! !
