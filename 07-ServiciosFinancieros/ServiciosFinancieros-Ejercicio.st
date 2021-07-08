@@ -5,18 +5,16 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 21:35:24'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:04:57'!
 test01anEmptyPortfolioHasZeroAsBalance 
 
 	| aPortfolio |
 	
 	aPortfolio := PortfolioAccount new.
 	
-	self assert: (0 * peso = aPortfolio balance )
+	self assert: (0 * peso = aPortfolio balance)! !
 
-! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 21:35:24'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:04:49'!
 test02aNewPortfolioWithOneAccountKnowsHisBalance
 
 	| anAccount aPortfolio |
@@ -26,11 +24,9 @@ test02aNewPortfolioWithOneAccountKnowsHisBalance
 	
 	aPortfolio := PortfolioAccount new add: anAccount.
 	
-	self assert: (100 * peso = aPortfolio balance )
+	self assert: (100 * peso = aPortfolio balance)! !
 
-! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 21:35:24'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:05:18'!
 test03aPortfolioWithMultipleAccountsKnowsHisBalance
 
 	| anAccount aPortfolio anotherAccount |
@@ -40,13 +36,11 @@ test03aPortfolioWithMultipleAccountsKnowsHisBalance
 	Deposit register: 100 * peso on: anAccount.	
 	Deposit register: 100 * peso on: anotherAccount.
 	
-	aPortfolio := (PortfolioAccount new add: anAccount )add: anotherAccount.
+	aPortfolio := (PortfolioAccount new add: anAccount) add: anotherAccount.
 	
-	self assert: (200 * peso = aPortfolio balance )
+	self assert: (200 * peso = aPortfolio balance)! !
 
-! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 21:35:24'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:05:31'!
 test04aPortfolioKnowsRegisteredTransactions
 
 	| anAccount aPortfolio aDeposit |
@@ -56,11 +50,9 @@ test04aPortfolioKnowsRegisteredTransactions
 	
 	aPortfolio := PortfolioAccount new add: anAccount.
 	
-	self assert: ( aPortfolio hasRegistered: aDeposit )
+	self assert: (aPortfolio hasRegistered: aDeposit)! !
 
-! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 21:35:24'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:05:47'!
 test05aPortfolioDoNotKnowNotRegiteredTransactions
 
 	| anAccount aPortfolio aDeposit anotherAccount |
@@ -71,12 +63,9 @@ test05aPortfolioDoNotKnowNotRegiteredTransactions
 	
 	aPortfolio := PortfolioAccount new add: anAccount.
 	
-	self deny: ( aPortfolio hasRegistered: aDeposit )
-	
+	self deny: (aPortfolio hasRegistered: aDeposit)! !
 
-! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 23:10:31'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:06:03'!
 test06aPortfolioWithOneAccountKnowsItsTransactions
 
 	| anAccount aPortfolio aDeposit |
@@ -87,13 +76,10 @@ test06aPortfolioWithOneAccountKnowsItsTransactions
 	aPortfolio := PortfolioAccount new add: anAccount.
 
 	
-	self assert: ( aPortfolio transactions includes: aDeposit ).
-	self assert: 1 equals: aPortfolio transactions size.
-	
+	self assert: (aPortfolio transactions includes: aDeposit).
+	self assert: 1 equals: aPortfolio transactions size.! !
 
-! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 23:10:45'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:06:36'!
 test07aPortfolioWithMultipleAccountsKnowsItsTransactions
 
 	| anAccount anotherAccount aPortfolio aDeposit aWithdraw |
@@ -103,18 +89,13 @@ test07aPortfolioWithMultipleAccountsKnowsItsTransactions
 	aDeposit := Deposit register: 100 * peso on: anAccount.	
 	aWithdraw := Withdraw register: 50 * peso on: anotherAccount.
 	
-	aPortfolio := ( PortfolioAccount new add: anAccount ) add: anotherAccount.
+	aPortfolio := (PortfolioAccount new add: anAccount) add: anotherAccount.
 
-	self assert: ( aPortfolio transactions includes: aDeposit ).
-	self assert: ( aPortfolio transactions includes: aWithdraw ).
-	self assert: 2 equals: aPortfolio transactions size.
-	
-	
-	
+	self assert: (aPortfolio transactions includes: aDeposit).
+	self assert: (aPortfolio transactions includes: aWithdraw).
+	self assert: 2 equals: aPortfolio transactions size! !
 
-! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'CC 7/7/2021 23:10:53'!
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:06:54'!
 test08aComposedPortfolioKnowsItsTransactionsAndBalance
 
 	"Este test pasaba pero lo dejamos para testear funcionalidad de portfolios compuestos "
@@ -127,25 +108,12 @@ test08aComposedPortfolioKnowsItsTransactionsAndBalance
 	aPortfolio := PortfolioAccount new add: anAccount.
 	composedPortfolio :=  PortfolioAccount new add: aPortfolio.
 
-	self assert: ( composedPortfolio transactions includes: aDeposit ).
+	self assert: (composedPortfolio transactions includes: aDeposit).
 	self assert: (100 * peso = composedPortfolio balance ).
-	self assert: 1 equals: composedPortfolio transactions size.
-	
-	
-	
+	self assert: 1 equals: composedPortfolio transactions size! !
 
-! !
-
-
-!classDefinition: #PortfolioTestExtra category: 'ServiciosFinancieros-Ejercicio'!
-TestCase subclass: #PortfolioTestExtra
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Ejercicio'!
-
-!PortfolioTestExtra methodsFor: 'testing' stamp: 'CC 7/8/2021 00:42:58'!
-test01PortfolioCanNotIncludeTheSameAccountMoreThanOnce
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:07:13'!
+testExtra01PortfolioCanNotIncludeTheSameAccountMoreThanOnce
 
 	| anAccount aPortfolio |
 
@@ -159,18 +127,11 @@ test01PortfolioCanNotIncludeTheSameAccountMoreThanOnce
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [ :anError | 
 			self assert: anError messageText equals: PortfolioAccount duplicateAccountErrorText.
-			self assert: (100 * peso = aPortfolio balance )
-		 ]	
-	
-	
+			self assert: (100 * peso = aPortfolio balance)
+		 ]! !
 
-
-
-! !
-
-!PortfolioTestExtra methodsFor: 'testing' stamp: 'CC 7/8/2021 00:44:27'!
-test02ComposedPortfolioCanNotIncludeTheSameAccountMoreThanOnce
-
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:07:24'!
+testExtra02ComposedPortfolioCanNotIncludeTheSameAccountMoreThanOnce
 
 	| anAccount aPortfolio aComposedPortfolio |
 
@@ -185,17 +146,11 @@ test02ComposedPortfolioCanNotIncludeTheSameAccountMoreThanOnce
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [ :anError | 
 			self assert: anError messageText equals: PortfolioAccount duplicateAccountErrorText.
-			self assert: (100 * peso = aComposedPortfolio balance )
-		 ]	
-	
-	
+			self assert: (100 * peso = aComposedPortfolio balance)
+		 ]! !
 
-
-
-! !
-
-!PortfolioTestExtra methodsFor: 'testing' stamp: 'CC 7/8/2021 00:45:54'!
-test03PortfolioCanNotIncludesItsSelf
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:07:34'!
+testExtra03PortfolioCanNotIncludesItsSelf
 
 	| aPortfolio  |
 
@@ -206,12 +161,11 @@ test03PortfolioCanNotIncludesItsSelf
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [ :anError | 
 			self assert: anError messageText equals: PortfolioAccount duplicateAccountErrorText.
-			self assert: (0 * peso = aPortfolio balance )
-		 ]	
-! !
+			self assert: (0 * peso = aPortfolio balance)
+		 ]! !
 
-!PortfolioTestExtra methodsFor: 'testing' stamp: 'CC 7/8/2021 00:47:04'!
-test04ComposedPortfolioCanNotHaveParentPortfolioAccount
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 07:25:42'!
+testExtra04ComposedPortfolioCanNotHaveParentPortfolioAccount
 
 	| anAccount sonPortfolio fatherPortfolio |
 
@@ -226,16 +180,10 @@ test04ComposedPortfolioCanNotHaveParentPortfolioAccount
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [ :anError | 
 			self assert: anError messageText equals: PortfolioAccount duplicateAccountErrorText.
-		 ]	
-	
-	
+		 ]! !
 
-
-
-! !
-
-!PortfolioTestExtra methodsFor: 'testing' stamp: 'CC 7/8/2021 00:49:10'!
-test05ComposedPortfolioCanNotAddAPortfolioWithAccountAlreadyInclude
+!PortfolioTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:08:03'!
+testExtra05ComposedPortfolioCanNotAddAPortfolioWithAccountAlreadyInclude
 
 	| anAccount sonPortfolio fatherPortfolio |
 
@@ -245,17 +193,11 @@ test05ComposedPortfolioCanNotAddAPortfolioWithAccountAlreadyInclude
 	sonPortfolio := PortfolioAccount new add: anAccount.
 	
 	self 
-		should: [ 	fatherPortfolio add: sonPortfolio.  ]
+		should: [ 	fatherPortfolio add: sonPortfolio  ]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [ :anError | 
 			self assert: anError messageText equals: PortfolioAccount duplicateAccountErrorText.
-		 ]	
-	
-	
-
-
-
-! !
+		 ]! !
 
 
 !classDefinition: #ReceptiveAccountTest category: 'ServiciosFinancieros-Ejercicio'!
@@ -400,7 +342,7 @@ test03aTransferWithdrawLegKnowsHisTransferDepositLeg
 
 ! !
 
-!TransferTest methodsFor: 'testing' stamp: 'CC 7/4/2021 23:18:23'!
+!TransferTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:08:38'!
 test04aTransferDepositLegKnowsHisTransferWithdrawLeg
 
 	| receiverAccount senderAccount aTransfer aDepositLeg aWithdrawLeg |
@@ -413,12 +355,9 @@ test04aTransferDepositLegKnowsHisTransferWithdrawLeg
 	aWithdrawLeg := aTransfer withdrawLeg.
 	aDepositLeg := aTransfer depositLeg.
 	
-	self assert: (aDepositLeg withdrawLeg = aWithdrawLeg ).
-	
+	self assert: (aDepositLeg withdrawLeg = aWithdrawLeg)! !
 
-! !
-
-!TransferTest methodsFor: 'testing' stamp: 'CC 7/4/2021 23:18:59'!
+!TransferTest methodsFor: 'testing' stamp: 'HJH 7/8/2021 08:08:24'!
 test05ATransferAmountMustBePositive
 
 	| receiverAccount senderAccount |
@@ -434,7 +373,7 @@ test05ATransferAmountMustBePositive
 		withExceptionDo: [ :anError | 
 			self assert: anError messageText equals: Transfer invalidTransferAmountErrorText.
 			self assert: 100 * peso = senderAccount balance.
-			self assert: 50 * peso = receiverAccount balance.
+			self assert: 50 * peso = receiverAccount balance
 		 ]! !
 
 
@@ -445,32 +384,35 @@ Object subclass: #Account
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!Account methodsFor: 'accesing' stamp: 'CC 7/7/2021 21:36:17'!
+!Account methodsFor: 'accesing' stamp: 'HJH 7/8/2021 07:59:58'!
 balance
 
-	self subclassResponsibility ! !
+	self subclassResponsibility! !
 
-!Account methodsFor: 'accesing' stamp: 'CC 7/7/2021 21:37:09'!
+!Account methodsFor: 'accesing' stamp: 'HJH 7/8/2021 08:00:47'!
 transactions 
 
-	self subclassResponsibility ! !
+	self subclassResponsibility! !
 
 
-!Account methodsFor: 'private' stamp: 'CC 7/7/2021 23:13:42'!
+!Account methodsFor: 'private' stamp: 'HJH 7/8/2021 08:00:20'!
+rootPortfolioAccount: aPortfolioAccount! !
+
+!Account methodsFor: 'private' stamp: 'HJH 7/8/2021 08:00:28'!
+verifyContentIsNotIn: theRootPortfolioAccount
+
+	self subclassResponsibility! !
+
+!Account methodsFor: 'private' stamp: 'HJH 7/8/2021 08:00:35'!
 verifyDuplicity: anAccount 
 
-	self subclassResponsibility ! !
-
-!Account methodsFor: 'private' stamp: 'CC 7/8/2021 00:19:52'!
-verifySonsAreNotIn: aPortfolioAccount
-
-	self subclassResponsibility ! !
+	self subclassResponsibility! !
 
 
-!Account methodsFor: 'comparing' stamp: 'CC 7/7/2021 21:36:54'!
+!Account methodsFor: 'comparing' stamp: 'HJH 7/8/2021 08:00:08'!
 hasRegistered: aTransaction
 
-	self subclassResponsibility ! !
+	self subclassResponsibility! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -486,16 +428,16 @@ duplicateAccountErrorText
 
 !classDefinition: #PortfolioAccount category: 'ServiciosFinancieros-Ejercicio'!
 Account subclass: #PortfolioAccount
-	instanceVariableNames: 'accounts root'
+	instanceVariableNames: 'accounts rootPortfolioAccount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!PortfolioAccount methodsFor: 'initialization' stamp: 'CC 7/7/2021 23:39:04'!
+!PortfolioAccount methodsFor: 'initialization' stamp: 'HJH 7/8/2021 07:29:16'!
 initialize
 
 	accounts := OrderedCollection new.
-	root := self! !
+	rootPortfolioAccount := self! !
 
 
 !PortfolioAccount methodsFor: 'comparing' stamp: 'CC 7/5/2021 21:19:03'!
@@ -523,44 +465,44 @@ transactions
 ! !
 
 
-!PortfolioAccount methodsFor: 'private' stamp: 'CC 7/7/2021 23:40:02'!
-root
+!PortfolioAccount methodsFor: 'private' stamp: 'HJH 7/8/2021 07:29:51'!
+rootPortfolioAccount
 
-	^root! !
+	^rootPortfolioAccount! !
 
-!PortfolioAccount methodsFor: 'private' stamp: 'CC 7/7/2021 23:42:41'!
-root: aPortfolioAccount
+!PortfolioAccount methodsFor: 'private' stamp: 'HJH 7/8/2021 07:30:58'!
+rootPortfolioAccount: aPortfolioAccount
 
-	root := aPortfolioAccount! !
+	rootPortfolioAccount := aPortfolioAccount.
+	accounts do: [:account | account rootPortfolioAccount: aPortfolioAccount]! !
 
-!PortfolioAccount methodsFor: 'private' stamp: 'CC 7/7/2021 23:13:42'!
+!PortfolioAccount methodsFor: 'private' stamp: 'HJH 7/8/2021 08:02:58'!
+verifyAllContentNotIncludedInAllPortfolio: anAccount
+
+	self = anAccount ifTrue: [^self error: self class duplicateAccountErrorText].
+
+	anAccount verifyContentIsNotIn: rootPortfolioAccount! !
+
+!PortfolioAccount methodsFor: 'private' stamp: 'HJH 7/8/2021 07:45:02'!
+verifyContentIsNotIn: theRootPortfolioAccount
+
+	accounts do: [ :account | (account verifyContentIsNotIn: theRootPortfolioAccount )].! !
+
+!PortfolioAccount methodsFor: 'private' stamp: 'HJH 7/8/2021 07:10:03'!
 verifyDuplicity: anAccount
 
-	(self = anAccount) ifTrue: [^self error: self class duplicateAccountErrorText].
-	
-	accounts do: [ :account | (account verifyDuplicity: anAccount)].
-	
-	
+	accounts do: [ :account | (account verifyDuplicity: anAccount)]
 ! !
 
-!PortfolioAccount methodsFor: 'private' stamp: 'CC 7/8/2021 00:19:39'!
-verifySonsAreNotIn: aPortfolioAccount
 
-	accounts do: [ :account | (account verifySonsAreNotIn: aPortfolioAccount)].
-	
+!PortfolioAccount methodsFor: 'adding' stamp: 'HJH 7/8/2021 07:55:40'!
+add: anAccount
+
+	self verifyAllContentNotIncludedInAllPortfolio: anAccount.
 		
-	
-! !
-
-
-!PortfolioAccount methodsFor: 'adding' stamp: 'CC 7/8/2021 00:07:57'!
-add: anAccount 
-
-	root verifyDuplicity: anAccount.
-	anAccount verifySonsAreNotIn: root.
-	
 	accounts add: anAccount.
-	anAccount root: self root.! !
+	anAccount rootPortfolioAccount: self rootPortfolioAccount
+! !
 
 
 !classDefinition: #ReceptiveAccount category: 'ServiciosFinancieros-Ejercicio'!
@@ -587,11 +529,10 @@ hasRegistered: aTransaction
 	^ transactions includes: aTransaction 
 ! !
 
-!ReceptiveAccount methodsFor: 'main protocol' stamp: 'HernanWilkinson 7/13/2011 18:37'!
+!ReceptiveAccount methodsFor: 'main protocol' stamp: 'HJH 7/8/2021 08:01:29'!
 register: aTransaction
 
-	transactions add: aTransaction 
-! !
+	transactions add: aTransaction! !
 
 !ReceptiveAccount methodsFor: 'main protocol' stamp: 'HernanWilkinson 7/13/2011 18:37'!
 transactions 
@@ -599,21 +540,16 @@ transactions
 	^ transactions copy! !
 
 
-!ReceptiveAccount methodsFor: 'private' stamp: 'CC 7/7/2021 23:41:15'!
-root: aPortfolioAccount 
+!ReceptiveAccount methodsFor: 'private' stamp: 'HJH 7/8/2021 08:01:47'!
+verifyContentIsNotIn: theRootPortfolioAccount
 
-! !
+	theRootPortfolioAccount verifyDuplicity: self! !
 
-!ReceptiveAccount methodsFor: 'private' stamp: 'CC 7/7/2021 23:13:42'!
+!ReceptiveAccount methodsFor: 'private' stamp: 'HJH 7/8/2021 08:02:29'!
 verifyDuplicity: anAccount
 
-	(self = anAccount) ifTrue: [^self error: self class duplicateAccountErrorText].
+	self = anAccount ifTrue: [^self error: self class duplicateAccountErrorText]
 ! !
-
-!ReceptiveAccount methodsFor: 'private' stamp: 'CC 7/8/2021 00:16:04'!
-verifySonsAreNotIn: aPortfolioAccount
-
-	aPortfolioAccount verifyDuplicity: self.! !
 
 
 !classDefinition: #AccountTransaction category: 'ServiciosFinancieros-Ejercicio'!
