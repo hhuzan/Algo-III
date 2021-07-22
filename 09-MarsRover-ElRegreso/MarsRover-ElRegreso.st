@@ -749,34 +749,36 @@ Object subclass: #StateMediator
 	poolDictionaries: ''
 	category: 'MarsRover-ElRegreso'!
 
-!StateMediator methodsFor: 'as yet unclassified' stamp: 'HJH 7/21/2021 22:21:11'!
-attach: anObserver
-
-	observers add: anObserver! !
-
-!StateMediator methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 14:23:53'!
-getValue
-
-	^value! !
-
-!StateMediator methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 05:37:02'!
-notify
-
-	self subclassResponsibility! !
-
-!StateMediator methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 14:24:33'!
-setValue: aValue
-
-	value := aValue.
-	self notify! !
-
-
 !StateMediator methodsFor: 'initialization' stamp: 'HJH 7/22/2021 01:41:53'!
 initializeFor: aMarsRover with: aValue 
 
 	marsRover := aMarsRover.
 	value := aValue.
 	observers := OrderedCollection new! !
+
+
+!StateMediator methodsFor: 'for observers' stamp: 'HJH 7/21/2021 22:21:11'!
+attach: anObserver
+
+	observers add: anObserver! !
+
+
+!StateMediator methodsFor: 'accessing' stamp: 'HJH 7/22/2021 14:23:53'!
+getValue
+
+	^value! !
+
+!StateMediator methodsFor: 'accessing' stamp: 'HJH 7/22/2021 14:24:33'!
+setValue: aValue
+
+	value := aValue.
+	self notify! !
+
+
+!StateMediator methodsFor: 'private' stamp: 'HJH 7/22/2021 05:37:02'!
+notify
+
+	self subclassResponsibility! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -798,7 +800,7 @@ StateMediator subclass: #HeadingMediator
 	poolDictionaries: ''
 	category: 'MarsRover-ElRegreso'!
 
-!HeadingMediator methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 15:21:27'!
+!HeadingMediator methodsFor: 'private' stamp: 'HJH 7/22/2021 15:21:27'!
 notify
 
 	observers do: [ :anObserver | anObserver updateHead: marsRover ]! !
@@ -811,7 +813,7 @@ StateMediator subclass: #PositionMediator
 	poolDictionaries: ''
 	category: 'MarsRover-ElRegreso'!
 
-!PositionMediator methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 05:33:47'!
+!PositionMediator methodsFor: 'private' stamp: 'HJH 7/22/2021 05:33:47'!
 notify
 
 	observers do: [ :anObserver | anObserver updatePosition: marsRover ]! !
