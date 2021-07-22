@@ -71,6 +71,21 @@ test05MarsRoverComposedLogWithMultipleCommandsLogsCorrectly
 	self assert: 'Position: 3@4;' equals: (logger logs at: 1)	.
 	self assert: 'Heading: East;' equals: (logger logs at: 2)! !
 
+!TestLogger methodsFor: 'tdd' stamp: 'HJH 7/22/2021 18:53:24'!
+test06MarsRoverComposedLogWithMultipleCommandsLogsCorrectly
+
+	| marsRover logger |
+	marsRover := MarsRover startingAt: 3@3 heading: #North.
+
+	logger := ComposedLogger for: marsRover.
+	
+	marsRover processCommands: 'rf'.
+	
+	self assert: 2 equals: logger logs size.
+	self assert: 'Heading: East;' equals: (logger logs at: 1).
+	self assert: 'Position: 4@3;' equals: (logger logs at: 2)	.
+! !
+
 
 !classDefinition: #TestMarsRover category: 'MarsRover-ElRegreso'!
 TestCase subclass: #TestMarsRover
@@ -239,7 +254,7 @@ test03MarsRoverSimpleWindowsWhenRotateShowsTheNewHeading
 	
 	self assert: 'Heading: East;' equals: window text! !
 
-!TestWindow methodsFor: 'tdd' stamp: 'HJH 7/22/2021 17:49:17'!
+!TestWindow methodsFor: 'tdd' stamp: 'HJH 7/22/2021 18:47:35'!
 test04MarsRoverComposedWindowWithMultipleCommandsShowsLastPositionAndHeading
 
 	| marsRover window |
@@ -247,9 +262,9 @@ test04MarsRoverComposedWindowWithMultipleCommandsShowsLastPositionAndHeading
 
 	window := ComposedWindow for: marsRover.
 	
-	marsRover processCommands: 'fr'.
+	marsRover processCommands: 'rf'.
 	
-	self assert: 'Position: 3@4;Heading: East;' equals: window text! !
+	self assert: 'Position: 4@3;Heading: East;' equals: window text! !
 
 
 !classDefinition: #Logger category: 'MarsRover-ElRegreso'!
@@ -263,6 +278,11 @@ Object subclass: #Logger
 initialize
 
 	logs := OrderedCollection new.! !
+
+!Logger methodsFor: 'initialization' stamp: 'HJH 7/22/2021 18:44:05'!
+initializeFor: aMarsRover
+
+	self subclassResponsibility! !
 
 
 !Logger methodsFor: 'private' stamp: 'HJH 7/22/2021 01:28:11'!
@@ -305,11 +325,6 @@ printWest
 	self log: 'Heading: West;'! !
 
 
-!Logger methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 17:58:58'!
-initializeFor: aMarsRover
-
-	aMarsRover attach: self! !
-
 !Logger methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 17:35:29'!
 initializeWith: aLogs
 
@@ -336,14 +351,14 @@ Logger subclass: #ComposedLogger
 	poolDictionaries: ''
 	category: 'MarsRover-ElRegreso'!
 
-!ComposedLogger methodsFor: 'initialization' stamp: 'HJH 7/22/2021 17:33:03'!
+!ComposedLogger methodsFor: 'initialization' stamp: 'HJH 7/22/2021 18:39:49'!
 initializeFor: aMarsRover
 
 	super initialize.
 	positionLogger := PositionLogger with: logs.
 	headLogger := HeadLogger with: logs.
-	aMarsRover attach: positionLogger.
-	aMarsRover attach: headLogger! !
+	aMarsRover attachForPosition: positionLogger.
+	aMarsRover attachForHead: headLogger! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -369,6 +384,12 @@ update: aMarsRover
 
 	aMarsRover printHeadFor: self! !
 
+
+!HeadLogger methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 18:41:08'!
+initializeFor: aMarsRover
+
+	aMarsRover attachForHead: self! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'HeadLogger class' category: 'MarsRover-ElRegreso'!
@@ -392,6 +413,12 @@ Logger subclass: #PositionLogger
 update: aMarsRover
 
 	aMarsRover printPositionFor: self! !
+
+
+!PositionLogger methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 18:41:40'!
+initializeFor: aMarsRover
+
+	aMarsRover attachForPosition: self! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -540,13 +567,15 @@ printPositionFor: anObserver
 	anObserver printPosition: position getValue! !
 
 
-!MarsRover methodsFor: 'for observers' stamp: 'HJH 7/22/2021 15:57:36'!
-attach: anObserver 
+!MarsRover methodsFor: 'for observers' stamp: 'HJH 7/22/2021 18:55:30'!
+attachForHead: anObserver 
 
-	(anObserver isKindOf: HeadLogger) ifTrue: [head attach: anObserver].
-	(anObserver isKindOf: HeadWindow) ifTrue: [head attach: anObserver].
-	(anObserver isKindOf: PositionLogger) ifTrue: [position attach: anObserver].
-	(anObserver isKindOf: PositionWindow) ifTrue: [position attach: anObserver]! !
+	head attach: anObserver! !
+
+!MarsRover methodsFor: 'for observers' stamp: 'HJH 7/22/2021 18:38:50'!
+attachForPosition: anObserver 
+
+	position attach: anObserver! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -904,11 +933,10 @@ initialize
 	textPosition := ''.
 	textHeading := ''! !
 
-!Window methodsFor: 'initialization' stamp: 'HJH 7/22/2021 17:53:23'!
+!Window methodsFor: 'initialization' stamp: 'HJH 7/22/2021 18:43:41'!
 initializeFor: aMarsRover
 
-	aMarsRover attach: self
-! !
+	self subclassResponsibility! !
 
 
 !Window methodsFor: 'accessing' stamp: 'HJH 7/19/2021 22:00:58'!
@@ -942,13 +970,13 @@ Window subclass: #ComposedWindow
 	poolDictionaries: ''
 	category: 'MarsRover-ElRegreso'!
 
-!ComposedWindow methodsFor: 'initialization' stamp: 'HJH 7/22/2021 17:48:43'!
+!ComposedWindow methodsFor: 'initialization' stamp: 'HJH 7/22/2021 18:45:13'!
 initializeFor: aMarsRover
 
 	positionWindow := PositionWindow new.
-	aMarsRover attach: positionWindow.
+	aMarsRover attachForPosition: positionWindow.
 	headWindow := HeadWindow new.
-	aMarsRover attach: headWindow! !
+	aMarsRover attachForPosition: headWindow! !
 
 
 !ComposedWindow methodsFor: 'accessing' stamp: 'HJH 7/22/2021 17:50:21'!
@@ -969,6 +997,13 @@ update: aMarsRover
 
 	aMarsRover printHeadFor: self.! !
 
+
+!HeadWindow methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 18:43:02'!
+initializeFor: aMarsRover
+
+	aMarsRover attachForHead: self
+! !
+
 
 !classDefinition: #PositionWindow category: 'MarsRover-ElRegreso'!
 Window subclass: #PositionWindow
@@ -981,4 +1016,11 @@ Window subclass: #PositionWindow
 update: aMarsRover 
 
 	aMarsRover printPositionFor: self
+! !
+
+
+!PositionWindow methodsFor: 'as yet unclassified' stamp: 'HJH 7/22/2021 18:43:22'!
+initializeFor: aMarsRover
+
+	aMarsRover attachForPosition: self
 ! !
