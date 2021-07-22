@@ -254,7 +254,7 @@ test03MarsRoverSimpleWindowsWhenRotateShowsTheNewHeading
 	
 	self assert: 'Heading: East;' equals: window text! !
 
-!TestWindow methodsFor: 'tdd' stamp: 'HJH 7/22/2021 18:47:35'!
+!TestWindow methodsFor: 'tdd' stamp: 'HJH 7/22/2021 20:49:30'!
 test04MarsRoverComposedWindowWithMultipleCommandsShowsLastPositionAndHeading
 
 	| marsRover window |
@@ -262,9 +262,9 @@ test04MarsRoverComposedWindowWithMultipleCommandsShowsLastPositionAndHeading
 
 	window := ComposedWindow for: marsRover.
 	
-	marsRover processCommands: 'rf'.
+	marsRover processCommands: 'fr'.
 	
-	self assert: 'Position: 4@3;Heading: East;' equals: window text! !
+	self assert: 'Position: 3@4;Heading: East;' equals: window text! !
 
 
 !classDefinition: #Logger category: 'MarsRover-ElRegreso'!
@@ -970,13 +970,13 @@ Window subclass: #ComposedWindow
 	poolDictionaries: ''
 	category: 'MarsRover-ElRegreso'!
 
-!ComposedWindow methodsFor: 'initialization' stamp: 'HJH 7/22/2021 18:45:13'!
+!ComposedWindow methodsFor: 'initialization' stamp: 'HJH 7/22/2021 20:48:35'!
 initializeFor: aMarsRover
 
 	positionWindow := PositionWindow new.
 	aMarsRover attachForPosition: positionWindow.
 	headWindow := HeadWindow new.
-	aMarsRover attachForPosition: headWindow! !
+	aMarsRover attachForHead: headWindow! !
 
 
 !ComposedWindow methodsFor: 'accessing' stamp: 'HJH 7/22/2021 17:50:21'!
